@@ -63,6 +63,19 @@ const clickEndHandler = (element: HTMLDivElement|null, event: UIEvent) => {
   }
 };
 
+const wheelHandler = (element: HTMLDivElement|null, event: React.WheelEvent) => {
+  if(!element) return;
+  if(element.classList.contains('moving')) return;
+  
+  const x = parseFloat(element.style.getPropertyValue('--translate-x') || '0px');
+  const y = parseFloat(element.style.getPropertyValue('--translate-y') || '0px');
+
+  element.style.setProperty('--translate-x', (x - event.deltaX) + 'px');
+  element.style.setProperty('--translate-y', (y - event.deltaY) + 'px');
+
+  //TODO: prevent gesture(history back, ...)
+}
+
 const Board = ({n, m}: {n: number, m: number}) => {
   const boardDiv = React.createRef<HTMLDivElement>();
 
@@ -73,6 +86,7 @@ const Board = ({n, m}: {n: number, m: number}) => {
       onPointerLeave={ event => clickEndHandler(boardDiv.current, event) }
       onClick={ event => clickEndHandler(boardDiv.current, event) }
       onPointerCancel={ event => clickEndHandler(boardDiv.current, event) }
+      onWheel={ event => wheelHandler(boardDiv.current, event) }
     >
       <BoardDiv ref={boardDiv} style={{width: `${100*m}px`}}>
         {Array(n).fill(null).map(_ =>

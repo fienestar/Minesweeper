@@ -1,8 +1,35 @@
 import { faBurst, faFlag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { MouseEvent, ReactNode } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Game } from '../../game'
+
+const MinedKeyframes = keyframes`
+  0%{
+      color: #FFFFFF00;
+      background-color: #5f2d83FF;
+  }
+  20%{
+      color: #FFFFFF33;
+      background-color: #5f2d83CC;
+  }
+  40%{
+      color: #FFFFFF66;
+      background-color: #5f2d8399;
+  }
+  60%{
+      color: #FFFFFF99;
+      background-color: #5f2d8366;
+  }
+  80%{
+      color: #FFFFFFCC;
+      background-color: #5f2d8333;
+  }
+  100%{
+      color: #FFFFFFFF;
+      background-color: #5f2d8300;
+  }
+`
 
 const CellDiv = styled.div`
   width: 85px;
@@ -16,6 +43,12 @@ const CellDiv = styled.div`
   line-height: 85px;
   font-size: 40px;
   font-family: system-ui;
+`
+
+const MinedCellDiv = styled(CellDiv)`
+  background-color: #5f2d8300;
+  animation-name: ${MinedKeyframes};
+  animation-duration: 0.2s;
 `
 
 interface CellProps {
@@ -69,8 +102,10 @@ const Cell: React.FC<CellProps> = ({ i, j, game, isMoving }) => {
     }
   }
 
+  const Element = mined ? MinedCellDiv : CellDiv
+
   return (
-    <CellDiv
+    <Element
       className={`cell ${mined ? 'mined' : ''}`}
       ref={cell}
       data-flagged={flagged}
@@ -78,7 +113,7 @@ const Cell: React.FC<CellProps> = ({ i, j, game, isMoving }) => {
       style={style}
     >
       {content}
-    </CellDiv>
+    </Element>
   )
 }
 

@@ -2,36 +2,3 @@ body{
     margin: 0;
     overflow: hidden;
 }
-
-@keyframes mined{
-    0%{
-        color: #FFFFFF00;
-        background-color: #5f2d83FF;
-    }
-    20%{
-        color: #FFFFFF33;
-        background-color: #5f2d83CC;
-    }
-    40%{
-        color: #FFFFFF66;
-        background-color: #5f2d8399;
-    }
-    60%{
-        color: #FFFFFF99;
-        background-color: #5f2d8366;
-    }
-    80%{
-        color: #FFFFFFCC;
-        background-color: #5f2d8333;
-    }
-    100%{
-        color: #FFFFFFFF;
-        background-color: #5f2d8300;
-    }
-}
-
-.cell.mined{
-    background-color: #5f2d8300;
-    animation-name: mined;
-    animation-duration: 0.2s;
-}

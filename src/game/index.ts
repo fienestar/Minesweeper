@@ -154,6 +154,10 @@ class Game {
   }
 
   public requestFlag (i: number, j: number): void {
+    if (!this.board[i][j].isMined) {
+      this.board[i][j].isFlag = !this.board[i][j].isFlag
+      this.callCellListener(i, j)
+    }
   }
 
   public addGameStateMutationListener (listener: GameStateMutationListener): void {

@@ -3,7 +3,7 @@ import Board from './game/Board'
 
 const Minesweeper: React.FC = () => {
   return (
-    <Board n={20} m={20}></Board>
+    <Board n={8} m={9}></Board>
   )
 }
 

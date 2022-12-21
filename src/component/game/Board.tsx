@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Cell from './Cell'
+import { Game } from '../../game'
 
 const BackgroundDiv = styled.div`
   height: 100vh;
@@ -23,8 +24,8 @@ const BoardDiv = styled.div`
 // onPointerUp을 사용하게 되면 moving class를 Cell의 onClick보다 먼저 제거하므로, onClick을 사용한다.
 
 function getTranslate (element: HTMLDivElement | null): { translateX: number, translateY: number } {
-  let translateX = element?.style.getPropertyValue('--translate-x')
-  let translateY = element?.style.getPropertyValue('--translate-y')
+  let translateX = element?.style.getPropertyValue('--translate-x') ?? '0ox'
+  let translateY = element?.style.getPropertyValue('--translate-y') ?? '0px'
 
   if (translateX === '') translateX = '0px'
   if (translateY === '') translateY = '0px'
@@ -96,6 +97,7 @@ interface BoardProps {
 
 const Board: React.FC<BoardProps> = ({ n, m }: { n: number, m: number }) => {
   const boardDiv = React.createRef<HTMLDivElement>()
+  const game = new Game(n, m, -1)
 
   return (
     <BackgroundDiv
@@ -111,9 +113,10 @@ const Board: React.FC<BoardProps> = ({ n, m }: { n: number, m: number }) => {
           Array(m).fill(null).map((_, j) =>
             <Cell
               key={`${i}-${j}`}
+              i={i}
+              j={j}
+              game={game}
               isMoving={() => boardDiv.current?.classList.contains('moving') ?? false}
-              isMine={Math.random() < 0.5}
-              minesAround={Math.floor(Math.random() * 8)}
             />)
         )}
       </BoardDiv>
